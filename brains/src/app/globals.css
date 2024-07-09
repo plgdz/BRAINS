@@ -1,0 +1,100 @@
+/* globals.css
+  Css de l'application
+  Thomas Garneau et Paul Agudze */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+header {
+  background-color: white !important;
+}
+
+body{
+  overflow: hidden;
+}
+
+.pageContainer{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.scrollable-div {
+  max-width: 100%;
+  overflow-y: scroll;
+  max-height: 100vh; 
+}
+
+.container{
+  overflow: hidden;
+}
+
+header, footer {
+  height: 50px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  flex: 1;
+}
+
+main {
+  flex: 1; 
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  height:max-content;
+  flex: 10;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.main-content {
+  flex: 4; 
+}
+
+.sidebar-toggle {
+  cursor: pointer;
+  color: black;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px;
+}
+
+.sidebar-nav ul li {
+  padding: 10px;
+}
+
+.sidebar {
+  flex: 1; 
+  height: 100%;
+  background-color: white; 
+  transition: left 0.3s ease;
+}
+
+.sidebar-nav ul li Link{
+  color: #333; 
+  display: flex;
+  align-items: center; 
+  text-decoration: none;
+}
+
+.sidebar-nav ul li Link {
+  margin-right: 8px;
+}
+
+.sidebar-nav ul li Link:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px; 
+}
+

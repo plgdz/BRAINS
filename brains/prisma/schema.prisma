@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model budgets {
+  budget_id   Int     @id @default(autoincrement())
+  user_id     Int
+  title       String  @db.VarChar(255)
+  description String?
+  users       Int[]
+}
+
+model passwords {
+  id       Int    @id(map: "pk_password") @default(autoincrement())
+  user_id  Int
+  password String @db.VarChar
+  users    users  @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+}
+
+model tasks {
+  task_id     Int       @id @default(autoincrement())
+  user_id     Int
+  title       String    @db.VarChar(255)
+  description String?
+  date        DateTime? @db.Date
+  users       Int[]
+  project_id  String?   @db.VarChar(255)
+  parent      Int?
+}
+
+model users {
+  user_id   Int         @id(map: "pk_user") @default(autoincrement())
+  pseudo    String      @unique @db.VarChar(128)
+  courriel  String      @unique @db.VarChar
+  passwords passwords[]
+}
+
+model projects_test {
+  id          Int     @id(map: "pk_projects_test") @default(autoincrement())
+  project_id  String  @db.VarChar(255)
+  title       String  @db.VarChar
+  description String?
+  parent      String? @db.VarChar(255)
+  user_id     Int
+  date        String?
+}
+
+model gym_exercices_test {
+  exercice_id Int     @id(map: "pk_exercices_test") @default(autoincrement())
+  user_id     Int
+  title       String  @db.VarChar
+  notes       String?
+  sets        Int
+  reps        Int
+  rest        Int
+  weight      Int
+  unit        String  @db.VarChar
+}
+
+model workouts_test {
+  workout_id      Int       @id(map: "pk_workouts_test") @default(autoincrement())
+  user_id         Int
+  title           String    @db.VarChar
+  notes           String?
+  exercises       Int[]
+  duration        Int?
+  is_recurring    Boolean?
+  recuring_period String?   @db.VarChar(255)
+  date            DateTime? @db.Date
+}
+
+model category {
+  category_id Int     @id @default(autoincrement())
+  budget_id   Int
+  title       String  @db.VarChar(255)
+  amount      Decimal @db.Decimal(10, 2)
+  is_income   Boolean
+}
+
+model completed_workouts {
+  id           Int       @id @default(autoincrement())
+  user_id      Int?
+  workout_id   Int?
+  completed_at DateTime? @db.Timestamp(6)
+  duration     Int?
+  notes        String?
+}
+
+model events {
+  event_id     Int      @id @default(autoincrement())
+  user_id      Int
+  reference_id String?  @db.VarChar(255)
+  type         type_id
+  date         DateTime @db.Date
+  title        String?  @db.VarChar(255)
+}
+
+model transactions {
+  transaction_id  Int      @id @default(autoincrement())
+  user_id         Int
+  category_id     Int
+  budget_id       Int
+  title           String   @db.VarChar(255)
+  amount          Decimal  @db.Decimal(10, 2)
+  is_recurring    Boolean
+  recuring_period String?  @db.VarChar(255)
+  date            DateTime @db.Date
+}
+
+enum cardio_type {
+  running
+  cycling
+  swimming
+}
+
+enum status {
+  todo
+  in_progress
+  done
+}
+
+enum type_id {
+  task
+  project
+  workout
+  event
+}
